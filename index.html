@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es" class="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FJVR - Portafolio Desarrollador Web Senior</title>
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+  <!-- Tailwind CSS v4 -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+  <style type="text/tailwindcss">
+    @import "tailwindcss";
+
+    @theme {
+      --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+      --color-primary: #a2d2ff;
+      --color-primary-dark: #74b9ff;
+      --color-secondary: #90c2ef;
+      --color-surface-warm: #f5f7f9;
+      --color-bg-sepia: #fdfaf4;
+      --background-image-gradient-text: linear-gradient(to right, #2563eb, #0891b2);
+      --background-image-gradient-blob: linear-gradient(to top right, #93c5fd, #a5f3fc);
+      --animate-bounce-slow: bounce 3s infinite;
+    }
+
+    @custom-variant dark (&:where(.dark, .dark *));
+
+    body {
+      background-color: var(--color-bg-sepia);
+      color: #334155;
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    ::selection {
+      background-color: var(--color-primary);
+      color: white;
+    }
+
+    .glass-nav {
+      background: rgba(252, 249, 242, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(227, 222, 203, 0.5);
+    }
+
+    .text-glow {
+      text-shadow: 0 0 20px rgba(162, 210, 255, 0.5);
+    }
+
+    /* Filtro SVG para efecto garabato */
+    .scribble-effect {
+      filter: url('#scribble');
+    }
+
+    /* Animación de deriva (Nubes) */
+    @keyframes drift {
+      0% {
+        transform: translate(-20vw, 0) scale(var(--scale));
+        opacity: 0;
+      }
+
+      10% {
+        opacity: var(--opacity);
+      }
+
+      90% {
+        opacity: var(--opacity);
+      }
+
+      100% {
+        transform: translate(120vw, 0) scale(var(--scale));
+        opacity: 0;
+      }
+    }
+
+    .animate-drift {
+      animation-name: drift;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+
+    .card-hover {
+      transition: all 0.3s ease;
+    }
+
+    .card-hover:hover {
+      transform: translateY(-5px);
+      border-color: rgba(162, 210, 255, 0.4);
+      box-shadow: 0 10px 40px -10px rgba(162, 210, 255, 0.15);
+    }
+  </style>
+</head>
+
+<body class="selection:bg-primary selection:text-slate-900">
+
+  <!-- Definición del filtro SVG (Invisible) -->
+  <svg style="display: none;">
+    <defs>
+      <filter id="scribble">
+        <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" />
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Contenedor de Nubes (Fondo) -->
+  <div id="clouds-container" class="fixed inset-0 pointer-events-none z-10 overflow-hidden select-none">
+    <!-- Las nubes se generan aquí con JS -->
+  </div>
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 w-full z-50 glass-nav transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2 group">
+        <div
+          class="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-slate-900 font-bold text-lg shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform">
+          +
+        </div>
+        <span class="text-xl font-bold tracking-tight">FJ<span class="text-primary">VR</span></span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#about"
+          class="text-sm font-medium text-slate-700 hover:text-slate-900 hover:text-primary transition-colors">Sobre
+          mí</a>
+        <a href="#skills"
+          class="text-sm font-medium text-slate-700 hover:text-slate-900 hover:text-primary transition-colors">Habilidades</a>
+        <a href="#projects"
+          class="text-sm font-medium text-slate-700 hover:text-slate-900 hover:text-primary transition-colors">Proyectos</a>
+        <a href="#contact"
+          class="text-sm font-medium text-slate-700 hover:text-slate-900 hover:text-primary transition-colors">Contacto</a>
+      </div>
+
+
+      <button class="md:hidden text-slate-700 hover:text-slate-900">
+        <span class="material-symbols-outlined text-3xl">menu</span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="relative pt-20">
+    <!-- Blobs de Fondo -->
+    <div
+      class="absolute filter blur-[100px] z-0 opacity-20 bg-primary w-96 h-96 rounded-full top-0 right-0 -mr-20 -mt-20 animate-pulse">
+    </div>
+    <div
+      class="absolute filter blur-[100px] z-0 opacity-20 bg-secondary w-80 h-80 rounded-full bottom-0 left-0 -ml-20 mb-20">
+    </div>
+
+    <!-- Hero Section -->
+    <section id="about"
+      class="relative z-20 max-w-7xl mx-auto px-6 py-20 md:py-32 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+      <div class="space-y-8">
+        <div
+          class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100/80 border border-amber-200 w-fit backdrop-blur-sm">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+          </span>
+          <span class="text-xs font-semibold text-slate-700 tracking-wide uppercase">Disponible para nuevos
+            proyectos</span>
+        </div>
+
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1] tracking-tight text-slate-900">
+          Construyendo <br>
+          Soluciones
+          <span class="text-transparent bg-clip-text bg-gradient-text text-glow">Escalables</span> <br>
+          para el Futuro.
+        </h1>
+
+        <p class="text-lg text-slate-900 max-w-lg leading-relaxed">
+          Soy Fran, un Desarrollador Web Senior especializado en arquitectura limpia, optimización de rendimiento y
+          soluciones digitales enfocadas al negocio.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-4">
+          <a href="#projects"
+            class="px-8 py-3.5 rounded-lg bg-primary hover:bg-primary-dark text-slate-900 font-bold transition-all shadow-[0_0_20px_rgba(162,210,255,0.4)] hover:shadow-[0_0_30px_rgba(162,210,255,0.6)] hover:-translate-y-1">
+            Ver Portafolio
+          </a>
+          <a href="#contact"
+            class="px-8 py-3.5 rounded-lg bg-transparent border border-amber-200 hover:border-slate-500 text-slate-900 font-semibold transition-all hover:bg-surface-warm/30">
+            Contáctame
+          </a>
+        </div>
+
+        <div class="pt-8 border-t border-amber-400/40 flex items-center gap-12">
+          <div>
+            <p class="text-3xl font-bold text-slate-900">8+</p>
+            <p class="text-xs text-slate-700 font-bold uppercase tracking-wider">Años Exp</p>
+          </div>
+          <div>
+            <p class="text-3xl font-bold text-slate-900">50+</p>
+            <p class="text-xs text-slate-700 font-bold uppercase tracking-wider">Proyectos</p>
+          </div>
+          <div>
+            <p class="text-3xl font-bold text-slate-900">100%</p>
+            <p class="text-xs text-slate-700 font-bold uppercase tracking-wider">Éxito</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative flex justify-center lg:justify-end">
+        <div class="relative w-80 h-80 md:w-[450px] md:h-[450px]">
+          <div class="absolute inset-0 bg-gradient-blob rounded-full opacity-20 blur-2xl animate-pulse"></div>
+          <div
+            class="absolute inset-4 rounded-full overflow-hidden border-2 border-amber-200 bg-surface-warm z-10 shadow-2xl">
+            <img src="IMG-20240616-WA0067.jpg"
+              alt="Fran Vergara"
+              class="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Strengths Section -->
+    <section class="py-20 bg-amber-100/50 border-y border-amber-400/40/50 backdrop-blur-sm relative z-20">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Fortalezas Principales</h2>
+          <p class="text-slate-900 max-w-2xl">Entregando excelencia técnica a través de metodologías probadas y un
+            enfoque en la mantenibilidad a largo plazo.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-bg-sepia p-8 rounded-2xl border border-amber-400/40 card-hover group">
+            <div
+              class="w-12 h-12 rounded-lg bg-surface-warm/50 flex items-center justify-center text-blue-600 mb-6 border border-amber-400/40 group-hover:bg-primary/20 group-hover:border-primary/50 transition-colors">
+              <span class="material-symbols-outlined text-2xl">psychology</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-3">Resolución de Problemas</h3>
+            <p class="text-slate-900 text-sm leading-relaxed">
+              Transformando requisitos complejos en lógica elegante. Desgloso problemas grandes en componentes
+              manejables y testeables.
+            </p>
+          </div>
+
+          <div class="bg-bg-sepia p-8 rounded-2xl border border-amber-400/40 card-hover group">
+            <div
+              class="w-12 h-12 rounded-lg bg-surface-warm/50 flex items-center justify-center text-blue-500 mb-6 border border-amber-400/40 group-hover:bg-secondary/20 group-hover:border-secondary/50 transition-colors">
+              <span class="material-symbols-outlined text-2xl">architecture</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-3">Arquitectura Limpia</h3>
+            <p class="text-slate-900 text-sm leading-relaxed">
+              Bases de código escalables y mantenibles para el éxito a largo plazo. Priorizo la legibilidad y los
+              patrones de diseño modulares.
+            </p>
+          </div>
+
+          <div class="bg-bg-sepia p-8 rounded-2xl border border-amber-400/40 card-hover group">
+            <div
+              class="w-12 h-12 rounded-lg bg-surface-warm/50 flex items-center justify-center text-emerald-600 mb-6 border border-amber-400/40 group-hover:bg-emerald-100 group-hover:border-emerald-500/50 transition-colors">
+              <span class="material-symbols-outlined text-2xl">trending_up</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-3">Enfoque de Negocio</h3>
+            <p class="text-slate-900 text-sm leading-relaxed">
+              Cerrando la brecha entre la ejecución técnica y el ROI. Construyo soluciones que impulsan un valor
+              empresarial real.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section id="skills" class="py-20 px-6 relative z-20">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <span class="text-primary font-bold tracking-wider uppercase text-xs">Tecnologías</span>
+          <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-2">Mi Stack Tecnológico</h2>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-9 gap-4 text-center">
+          <!-- Javascript -->
+          <div
+            class="flex flex-col items-center justify-center gap-3 p-4 rounded-xl bg-surface-warm border border-amber-400/40 hover:border-yellow-400/50 hover:bg-slate-100/80 transition-all cursor-default group hover:-translate-y-1 h-40">
+            <div class="h-14 flex items-center justify-center">
+              <span
+                class="material-symbols-outlined text-5xl text-slate-700 group-hover:text-yellow-600 transition-colors">javascript</span>
+            </div>
+            <span class="text-xs font-bold text-slate-900 group-hover:text-indigo-900">JavaScript</span>
+          </div>
+          <!-- TypeScript -->
+          <div
+            class="flex flex-col items-center justify-center gap-3 p-4 rounded-xl bg-surface-warm border border-amber-400/40 hover:border-blue-500/50 hover:bg-slate-100/80 transition-all cursor-default group hover:-translate-y-1 h-40">
+            <div class="h-14 flex items-center justify-center">
+              <span
+                class="material-symbols-outlined text-5xl text-slate-700 group-hover:text-blue-600 transition-colors">code</span>
+            </div>
+            <span class="text-xs font-bold text-slate-900 group-hover:text-indigo-900">TypeScript</span>
+          </div>
+          <!-- Angular -->
+          <div
+            class="flex flex-col items-center justify-center gap-3 p-4 rounded-xl bg-surface-warm border border-amber-400/40 hover:border-red-500/50 hover:bg-slate-100/80 transition-all cursor-default group hover:-translate-y-1 h-40">
+            <div class="h-14 flex items-center justify-center">
+              <span
+                class="material-symbols-outlined text-5xl text-slate-700 group-hover:text-red-600 transition-colors">deployed_code</span>
+            </div>
+            <span class="text-xs font-bold text-slate-900 group-hover:text-indigo-900">Angular</span>
+          </div>
+          <!-- Spring Boot -->
+          <div
+            class="flex flex-col items-center justify-center gap-3 p-4 rounded-xl bg-surface-warm border border-amber-400/40 hover:border-[#6DB33F] hover:bg-slate-100/80 transition-all cursor-default group hover:-translate-y-1 h-40">
+            <div class="h-14 flex items-center justify-center">
+              <svg class="w-6 h-6 transition-colors" viewBox="0 0 97.1 97">
+                <circle cx="48.55" cy="48.5" r="48.5" fill="currentColor"
+                  class="text-slate-700 group-hover:text-[#6DB33F] transition-colors" />
+                <path
+                  d="M88.1,69.9C76.2,85.8,50.6,80.4,34.3,81.2c0,0-2.9.2-5.8.6,0,0,1.1-.5,2.5-1,11.5-4,16.9-4.8,23.9-8.4C68,65.7,81.1,51,83.7,35.8c-5,14.6-20.2,27.2-34,32.3C40.2,71.6,23.1,75,23.1,75l-.7-.4c-11.6-5.7-12-30.9,9.2-39,9.3-3.6,18.1-1.6,28.2-4,10.7-2.5,23.1-10.5,28.1-21C93.5,27.5,100.3,53.7,88.1,69.9Z"
+                  fill="#f5f7f9" class="group-hover:fill-white transition-colors" />
+              </svg>
+            </div>
+            <span class="text-xs font-bold text-slate-900 group-hover:text-indigo-900">Spring Boot</span>
+          </div>
+          <!-- SQL -->
+          <div
+            class="flex flex-col items-center justify-center gap-3 p-4 rounded-xl bg-surface-warm border border-amber-400/40 hover:border-slate-400 hover:bg-slate-100/80 transition-all cursor-default group hover:-translate-y-1 h-40">
+            <div class="h-14 flex items-center justify-center">
+              <span
+                class="material-symbols-outlined text-5xl text-slate-700 group-hover:text-slate-900 transition-colors">database</span>
+            </div>
+            <span class="text-xs font-bold text-slate-900 group-hover:text-indigo-900">SQL</span>
+          </div>
+          <!-- AWS -->
+          <div
+            class="flex flex-col items-center justify-center gap-3 p-4 rounded-xl bg-surface-warm border border-amber-400/40 hover:border-orange-500/50 hover:bg-slate-100/80 transition-all cursor-default group hover:-translate-y-1 h-40">
+            <div class="h-14 flex items-center justify-center">
+              <span
+                class="material-symbols-outlined text-5xl text-slate-700 group-hover:text-orange-500 transition-colors">cloud</span>
+            </div>
+            <span class="text-xs font-bold text-slate-900 group-hover:text-indigo-900">AWS</span>
+          </div>
+          <!-- Docker -->
+          <div
+            class="flex flex-col items-center justify-center gap-3 p-4 rounded-xl bg-surface-warm border border-amber-400/40 hover:border-blue-400/50 hover:bg-slate-100/80 transition-all cursor-default group hover:-translate-y-1 h-40">
+            <div class="h-14 flex items-center justify-center">
+              <span
+                class="material-symbols-outlined text-5xl text-slate-700 group-hover:text-blue-400 transition-colors">deployed_code</span>
+            </div>
+            <span class="text-xs font-bold text-slate-900 group-hover:text-indigo-900">Docker</span>
+          </div>
+          <!-- PHP -->
+          <div
+            class="flex flex-col items-center justify-center gap-3 p-4 rounded-xl bg-surface-warm border border-amber-400/40 hover:border-indigo-500/50 hover:bg-slate-100/80 transition-all cursor-default group hover:-translate-y-1 h-40">
+            <div class="h-14 flex items-center justify-center">
+              <span
+                class="material-symbols-outlined text-5xl text-slate-700 group-hover:text-indigo-600 transition-colors">php</span>
+            </div>
+            <span class="text-xs font-bold text-slate-900 group-hover:text-indigo-900">PHP</span>
+          </div>
+          <!-- Java -->
+          <div
+            class="flex flex-col items-center justify-center gap-3 p-4 rounded-xl bg-surface-warm border border-amber-400/40 hover:border-orange-600/50 hover:bg-slate-100/80 transition-all cursor-default group hover:-translate-y-1 h-40">
+            <div class="h-14 flex items-center justify-center">
+              <span
+                class="material-symbols-outlined text-5xl text-slate-700 group-hover:text-orange-600 transition-colors">coffee</span>
+            </div>
+            <span class="text-xs font-bold text-slate-900 group-hover:text-indigo-900">Java</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-6 relative z-20">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+          <div>
+            <span class="text-primary font-bold tracking-wider uppercase text-xs">Portafolio</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mt-2">Proyectos Destacados</h2>
+          </div>
+          <a href="#"
+            class="flex items-center gap-1 text-slate-900 hover:text-slate-900 transition-colors text-sm font-medium group">
+            Ver GitHub <span
+              class="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <!-- Project 1 -->
+          <div
+            class="group bg-surface-warm rounded-2xl border border-amber-400/40 overflow-hidden hover:border-slate-600 transition-all duration-300 flex flex-col hover:shadow-2xl hover:shadow-primary/5">
+            <div class="relative h-64 overflow-hidden">
+              <div class="absolute inset-0 bg-surface-warm/20 group-hover:bg-transparent transition-all z-10"></div>
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop"
+                alt="Dashboard"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <div class="p-8 flex flex-col flex-grow">
+              <h3 class="text-2xl font-bold text-slate-900 mb-3">SaaS de Análisis Empresarial</h3>
+              <p class="text-slate-900 text-sm mb-6 leading-relaxed flex-grow">
+                Una plataforma integral de visualización de datos para clientes empresariales. Cuenta con
+                actualizaciones por websocket en tiempo real, gráficos complejos y control de acceso basado en roles.
+              </p>
+
+              <div class="flex flex-wrap gap-2 mb-8">
+                <span
+                  class="px-3 py-1 text-xs font-semibold rounded-full bg-surface-warm/30 text-cyan-400 border border-amber-200">React</span>
+                <span
+                  class="px-3 py-1 text-xs font-semibold rounded-full bg-surface-warm/30 text-green-400 border border-amber-200">Node.js</span>
+                <span
+                  class="px-3 py-1 text-xs font-semibold rounded-full bg-surface-warm/30 text-purple-400 border border-amber-200">PostgreSQL</span>
+              </div>
+
+              <div class="flex gap-4">
+                <a href="#"
+                  class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary-dark text-slate-900 font-bold rounded-lg transition-colors text-sm">
+                  <span class="material-symbols-outlined text-lg">visibility</span> Demo en Vivo
+                </a>
+                <a href="#"
+                  class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-transparent border border-amber-200 hover:bg-surface-warm/30 text-slate-900 font-semibold rounded-lg transition-colors text-sm">
+                  <span class="material-symbols-outlined text-lg">code</span> Código
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div
+            class="group bg-surface-warm rounded-2xl border border-amber-400/40 overflow-hidden hover:border-slate-600 transition-all duration-300 flex flex-col hover:shadow-2xl hover:shadow-secondary/5">
+            <div class="relative h-64 overflow-hidden">
+              <div class="absolute inset-0 bg-surface-warm/20 group-hover:bg-transparent transition-all z-10"></div>
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop"
+                alt="E-commerce"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            </div>
+            <div class="p-8 flex flex-col flex-grow">
+              <h3 class="text-2xl font-bold text-slate-900 mb-3">Nebula E-commerce</h3>
+              <p class="text-slate-900 text-sm mb-6 leading-relaxed flex-grow">
+                Solución de comercio electrónico headless construida para velocidad y SEO. Integrada con Stripe para
+                pagos y un CMS personalizado para la gestión de inventario.
+              </p>
+
+              <div class="flex flex-wrap gap-2 mb-8">
+                <span
+                  class="px-3 py-1 text-xs font-semibold rounded-full bg-surface-warm/30 text-slate-900 border border-amber-200">Next.js</span>
+                <span
+                  class="px-3 py-1 text-xs font-semibold rounded-full bg-surface-warm/30 text-blue-400 border border-amber-200">TypeScript</span>
+                <span
+                  class="px-3 py-1 text-xs font-semibold rounded-full bg-surface-warm/30 text-indigo-400 border border-amber-200">Stripe</span>
+              </div>
+
+              <div class="flex gap-4">
+                <a href="#"
+                  class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary-dark text-slate-900 font-bold rounded-lg transition-colors text-sm">
+                  <span class="material-symbols-outlined text-lg">visibility</span> Demo en Vivo
+                </a>
+                <a href="#"
+                  class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-transparent border border-amber-200 hover:bg-surface-warm/30 text-slate-900 font-semibold rounded-lg transition-colors text-sm">
+                  <span class="material-symbols-outlined text-lg">code</span> Código
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Professional Summary (Big Card) -->
+    <section class="py-20 px-6 relative z-20">
+      <div class="max-w-4xl mx-auto">
+        <div
+          class="bg-surface-warm/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-amber-400/40 shadow-2xl relative overflow-hidden">
+          <!-- Glow effect inside card -->
+          <div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/20 rounded-full blur-[80px] pointer-events-none">
+          </div>
+
+          <h2 class="text-3xl font-bold text-slate-900 mb-8 relative z-20">Resumen Profesional</h2>
+
+          <div class="space-y-6 text-slate-700 text-lg leading-relaxed relative z-20">
+            <p>
+              Con más de 8 años de experiencia en desarrollo full-stack, he liderado equipos en la construcción de
+              aplicaciones escalables y de misión crítica para startups de fintech y salud. Mi experiencia radica no
+              solo en escribir código, sino en arquitecturar sistemas que sean resilientes, testeables y fáciles de
+              mantener.
+            </p>
+            <p>
+              Abogo por la <strong class="text-slate-900">Arquitectura Limpia</strong> y el <strong
+                class="text-slate-900">Diseño Guiado por el Dominio (DDD)</strong>. Creo que las decisiones técnicas
+              siempre
+              deben servir a los objetivos comerciales. Ya sea optimizando consultas de bases de datos para reducir la
+              latencia en un 50% o refactorizando bases de código heredadas para mejorar la velocidad del
+              desarrollador,
+              aporto un enfoque pragmático y orientado a resultados a la ingeniería.
+            </p>
+          </div>
+
+          <div
+            class="mt-12 pt-8 border-t border-amber-400/40 flex flex-col md:flex-row justify-between gap-8 relative z-20">
+            <div>
+              <p class="text-xs text-slate-700 font-bold uppercase tracking-wider mb-2">Educación</p>
+              <p class="text-slate-900 font-medium">Ing. en Ciencias de la Computación, Tech University</p>
+            </div>
+            <div>
+              <p class="text-xs text-slate-700 font-bold uppercase tracking-wider mb-2">Certificaciones</p>
+              <div class="flex gap-2">
+                <span class="px-2 py-1 bg-surface-warm/30 border border-amber-200 rounded text-xs text-slate-700">AWS
+                  Certified Developer</span>
+                <span class="px-2 py-1 bg-surface-warm/30 border border-amber-200 rounded text-xs text-slate-700">Google
+                  Cloud
+                  Pro</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-bg-sepia border-t border-surface-warm px-6 relative z-20">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+          <!-- Contact Info -->
+          <div>
+            <span class="text-primary font-bold tracking-wider uppercase text-xs">Ponte en Contacto</span>
+            <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mt-3 mb-6">Trabajemos juntos.</h2>
+            <p class="text-slate-900 text-lg mb-12 max-w-md">
+              ¿Tienes un proyecto en mente o quieres discutir tecnologías web modernas? Siempre estoy abierto a
+              conversar sobre nuevas oportunidades.
+            </p>
+
+            <div class="space-y-8">
+              <a href="mailto:alex.dev@example.com" class="flex items-center gap-4 group">
+                <div
+                  class="w-12 h-12 rounded-lg bg-surface-warm border border-amber-400/40 flex items-center justify-center text-slate-900 group-hover:text-primary group-hover:border-primary/50 transition-all">
+                  <span class="material-symbols-outlined text-2xl">mail</span>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-700 font-bold uppercase tracking-wider">Envíame un correo</p>
+                  <p class="text-lg font-medium text-slate-900 group-hover:text-primary transition-colors">
+                    alex.dev@example.com</p>
+                </div>
+              </a>
+
+              <div class="flex items-center gap-4">
+                <div
+                  class="w-12 h-12 rounded-lg bg-surface-warm border border-amber-400/40 flex items-center justify-center text-slate-900">
+                  <span class="material-symbols-outlined text-2xl">location_on</span>
+                </div>
+                <div>
+                  <p class="text-xs text-slate-700 font-bold uppercase tracking-wider">Ubicación</p>
+                  <p class="text-lg font-medium text-slate-900">San Francisco, CA (Remoto)</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Social Icons -->
+            <div class="pt-10 flex gap-4">
+              <a href="#"
+                class="w-10 h-10 rounded-full bg-surface-warm border border-amber-400/40 flex items-center justify-center text-slate-900 hover:bg-primary hover:text-slate-900 hover:border-primary transition-all">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill-rule="evenodd"
+                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+                    clip-rule="evenodd"></path>
+                </svg>
+              </a>
+              <a href="#"
+                class="w-10 h-10 rounded-full bg-surface-warm border border-amber-400/40 flex items-center justify-center text-slate-900 hover:bg-primary hover:text-slate-900 hover:border-primary transition-all">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fill-rule="evenodd"
+                    d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                    clip-rule="evenodd"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <div class="bg-surface-warm p-8 rounded-2xl border border-amber-400/40 shadow-xl">
+            <form class="space-y-6">
+              <div>
+                <label for="name" class="block text-sm font-medium text-slate-900 mb-2">Nombre</label>
+                <input type="text" id="name" placeholder="Juan Pérez"
+                  class="w-full bg-bg-sepia border border-amber-400/40 rounded-lg px-4 py-3 text-slate-900 placeholder-slate-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+              </div>
+              <div>
+                <label for="email" class="block text-sm font-medium text-slate-900 mb-2">Email</label>
+                <input type="email" id="email" placeholder="juan@ejemplo.com"
+                  class="w-full bg-bg-sepia border border-amber-400/40 rounded-lg px-4 py-3 text-slate-900 placeholder-slate-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+              </div>
+              <div>
+                <label for="message" class="block text-sm font-medium text-slate-900 mb-2">Mensaje</label>
+                <textarea id="message" rows="4" placeholder="Cuéntame sobre tu proyecto..."
+                  class="w-full bg-bg-sepia border border-amber-400/40 rounded-lg px-4 py-3 text-slate-900 placeholder-slate-600 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"></textarea>
+              </div>
+              <button type="button"
+                class="w-full py-4 bg-primary hover:bg-primary-dark text-slate-900 font-bold rounded-lg transition-all shadow-lg hover:shadow-primary/25 hover:-translate-y-0.5">
+                Enviar Mensaje
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-bg-sepia border-t border-surface-warm text-center relative z-20">
+      <p class="text-slate-500 text-sm">© 2023 Alex Dev. Todos los derechos reservados.</p>
+    </footer>
+
+  </main>
+
+  <!-- Script de Animación de Nubes -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('clouds-container');
+      const cloudCount = 12;
+
+      // SVG de nube minimalista
+      const cloudSVG = `
+                <svg width="100" height="60" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M17.5,19c3.037,0,5.5-2.463,5.5-5.5c0-2.445-1.597-4.517-3.812-5.222C18.804,4.288,15.548,2,11.5,2 C8.026,2,5.088,3.754,3.465,6.417C1.465,7.246,0,9.208,0,11.5C0,14.537,2.463,17,5.5,17c0.168,0,0.332-0.01,0.495-0.024 C7.027,18.232,8.665,19,10.5,19c1.037,0,1.989-0.247,2.831-0.678C14.316,18.795,15.827,19,17.5,19z" />
+                </svg>
+            `;
+
+      for (let i = 0; i < cloudCount; i++) {
+        const el = document.createElement('div');
+        el.innerHTML = cloudSVG;
+        el.className = 'absolute text-blue-400/30 scribble-effect animate-drift pointer-events-none';
+
+        // Posición inicial aleatoria
+        el.style.left = (Math.random() * -30) - 20 + '%';
+        el.style.top = (Math.random() * 100) + '%';
+
+        // Duración y retraso de la animación (con retraso negativo para inicio inmediato)
+        const duration = 40 + Math.random() * 60;
+        el.style.animationDuration = duration + 's';
+        el.style.animationDelay = -(Math.random() * duration) + 's';
+
+        // Variables CSS personalizadas para la animación
+        const scale = 1.2 + Math.random() * 2.0;
+        const opacity = 0.5 + Math.random() * 0.4;
+
+        el.style.setProperty('--scale', scale);
+        el.style.setProperty('--opacity', opacity);
+
+        container.appendChild(el);
+      }
+    });
+  </script>
+
+</body>
+
+</html>
